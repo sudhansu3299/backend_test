@@ -14,6 +14,8 @@ const cors = require('cors');
 const app = express();
 app.use(cors({ origin: true }));
 
+const port = process.env.PORT || 5000;
+
 var serviceAccount = require("./firebase-perms.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -108,5 +110,9 @@ app.delete('/api/delete/:item_id', (req, res) => {
     }
     })();
 });
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })
 
 exports.app = functions.https.onRequest(app);
